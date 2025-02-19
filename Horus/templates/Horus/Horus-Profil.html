@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horus</title>
+    <link rel="icon" type="image/x-icon" href="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]/Horus/Bilder/Horuseye.png">
+</head>
+
+<style>
+
+body {
+    background-color: #262626;
+    font-family: Arial, sans-serif;
+}
+
+#menuswitch {
+    margin: 0 0 2% 20px;
+    cursor: pointer;
+    height: 20px;
+}
+
+#Logo {
+    height: 80px;
+}
+
+#app-container {
+    display: flex;
+    height: 100vh;
+}
+
+#sidebar {
+    width: 250px;
+    background-color: #262626;
+    padding: 20px;
+    color: white;
+}
+
+#sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#sidebar ul li {
+    margin: 15px 0;
+}
+
+#sidebar a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+#sidebar a:hover {
+    text-decoration: underline;
+}
+
+#content {
+    flex-grow: 1;
+    padding: 20px;
+    border-radius: 20px;
+    background-image: linear-gradient(0deg, #d29501, black);
+}
+
+#Home, #Profil, #Log-Out, #Admin-Tools {
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+#card {
+    padding: 20px;
+    background: lightgray;
+    border-radius: 10px;
+    color: black;
+    margin: 2% 0;
+}
+
+#card1, #card2, #card3, #card4, #card5, #card6, #card7, #card8, #card9 {
+    border-top: 1px solid #d29501;
+    overflow: auto;
+    height: 250px;
+}
+
+#eintragen select, #eintragen input, #eintragen textarea {
+    width: 100%;
+    margin: 15px 0;
+}
+
+#lernkarte {
+    background-color: white;
+    color: black;
+    padding: 2px 15px;
+    border-radius: 10px;
+    margin: 6px;
+}
+
+/* admin: 𓂀
+    vip: 𓁿
+    normal: 𓁹
+    ⌄  ⌃
+
+*/
+
+#status-word, #status-icon {
+    float: right;
+    color: lightblue;
+}
+
+#genehmigung, #ablehnung, #sperren, #freigeben {
+    float: right;
+}
+
+#freigeben {
+    background-color: lightcoral;
+    border-radius: 20px;
+    height: 30px;
+    padding: 0;
+    width: 50px;
+    margin: 10px;
+    box-shadow: inset 0 0 5px gray;
+}
+
+#sperren {
+    background-color: lightgreen;
+    border-radius: 20px;
+    height: 30px;
+    padding: 0;
+    width: 50px;
+    margin: 10px;
+    box-shadow: inset 0 0 5px gray;
+
+}
+
+#genehmigung button, #ablehnung button {
+    height: 100%;
+    margin: 10px 5px;
+    padding: 5px;
+    width: 50px;
+    cursor: pointer;
+}
+
+#sperren button, #freigeben button {
+    height: 100%;
+    margin: 10px 5px;
+    padding: 5px 0;
+    width: 29px;
+    border-radius: 50px;
+    border: none;
+    border-bottom: 2px solid gray;
+    color: transparent;
+    cursor: pointer;
+}
+
+#logoutbutton {
+    color: black;
+    border: none;
+    width: 200px;
+    padding: 5px;
+    border-radius: 5px;
+    float: left;
+    margin: 15px 5px auto;
+    background-color: #d19400;
+    cursor: pointer;
+}
+
+#print-container {
+    display: none;
+}
+
+
+@media (max-width: 1000px){
+
+#Logo {
+
+}
+#app-container {
+        flex-direction: column;
+    }
+#sidebar {
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+    }
+#sidebar a {
+        font-size: 16px;
+    }
+#mainmenu {
+    display: flex;
+    justify-content: space-around;
+    border-top: none;
+    padding-top: 0;
+    margin-top: 10px;
+}
+
+#content {
+    padding: 0;
+}
+
+}
+
+@media print{
+    #app-container, #menuswitch, #status-icon, #status-word {
+        display: none;
+    }
+    #print-container {
+        display: block;
+    }
+
+    #Logo {
+        height: 50pt;
+    }
+
+    h2 {
+        font-size: 15pt;
+    }
+
+    #lernkarte, #kumulativ {
+        border-top: 2px solid black;
+        border-radius: 0;
+        line-height: 0.5pt;
+    }
+
+    #kumulativ {
+        border-top: double 3pt black;
+    }
+}
+
+
+
+</style>
+
+<script>
+    function showContent(show, hide1, hide2, hide3) {
+        document.getElementById(show).style.display = 'block';
+        document.getElementById(hide1).style.display = 'none';
+        document.getElementById(hide2).style.display = 'none';
+        document.getElementById(hide3).style.display = 'none';
+    }
+
+    function showCard(content, show) {
+        document.getElementById(content).style.display = 'block';
+        document.getElementById(show).innerHTML = 'hide';
+    }
+
+    function hideCard(content, show) {
+        document.getElementById(content).style.display = 'none';
+        document.getElementById(show).innerHTML = 'show';
+    }
+
+    function showMenu() {
+        document.getElementById('sidebar').style.display = 'block';
+        document.getElementById('menuswitch').setAttribute('onclick', 'hideMenu()');
+    }
+    
+    function hideMenu() {
+        document.getElementById('sidebar').style.display = 'none';
+        document.getElementById('menuswitch').setAttribute('onclick', 'showMenu()');
+    }
+
+    function printView() {
+        window.print()
+    }
+
+
+</script>
+
+<body>
+    <header>
+        <img id="Logo" src="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]/Horus/Bilder/Schriftzug.png" alt="Horus Schriftzug mit Logo">
+        <div style="float: right; display: grid; text-align: center; margin: 10px;">
+            <div style="float: right; background-color: black; border: 2px solid #d29501; border-radius: 50px;">
+                <div id="status-icon" style="font-size: 30px; margin: -17px 9px auto 9px;">𓁹</div>
+            </div>
+            <p id="status-word" style="margin: 2px;">basic</p>
+        </div>
+    </header>
+    <img id="menuswitch" onclick="showMenu()" src="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]/Horus/Bilder/Menu-Icon.png">
+    <div id="app-container">
+        <nav id="sidebar" style="display:none;">
+            <ul id="mainmenu">
+                <li><a href="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]:8000/Horus/Home?accname={{ Accname }}&pwd={{ PWD }}" id="home-button" onclick="showContent('Home', 'Profil', 'Log-Out', 'Admin-Tools')">Home</a></li>
+                <li><a href="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]:8000/Horus/Profil?accname={{ Accname }}&pwd={{ PWD }}" id="profil-button" onclick="showContent('Profil', 'Home', 'Log-Out', 'Admin-Tools')">Profil</a></li>
+                <li><a href="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]/Horus/LogIn.html" id="logout-button" onclick="showContent('Log-Out', 'Home', 'Profil', 'Admin-Tools')">Log out</a></li>
+            </ul>
+        </nav>
+        <div id="content">
+            <div id="Profil" style="display: block;">
+                <h2>Dein Profil</h2>
+                <div id="card">
+                    <h2>Stammdaten</h2>
+                    <div id="card7" style="display: block;">
+                        <h3>Deine Stammdaten ändern</h3>
+                        <form action="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]:8000/Horus/Profil" method="get" id="changeUsername">
+                            <input type="hidden" name="accname" value="{{ Accname }}">
+                            <input type="hidden" name="pwd" value="{{ PWD }}">                
+                            <h4 style="text-decoration: underline;">Username ändern</h4>
+                            <p>Dein aktueller Username lautet: <strong>{{ Name }}</strong></p>
+                            <label for="frageNachUsername">Gib deinen neuen Usernamen ein:</label>
+                            <input type="text" name="changeUsername" id="frageNachUsername">
+                            <button type="submit">ändern</button>
+                        </form>
+                        <form action="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]:8000/Horus/Profil" method="get" id="changePassword">
+                            <input type="hidden" name="accname" value="{{ Accname }}">
+                            <input type="hidden" name="pwd" value="{{ PWD }}">                
+                            <h4 style="text-decoration: underline;">Passwort ändern</h4>
+                            <label for="frageNachPassword">Gib deinen neues Passwort ein:</label>
+                            <input type="password" name="changePassword" id="frageNachPassword">
+                            <button type="submit">ändern</button>
+                        </form>
+                    </div>
+                </div>
+                <div id="card">
+                    <h2>Statuswechsel</h2>
+                    <div id="card8" style="display: block; height: 100px;">
+                        {% if antragGestellt == False %}
+                        <h3>Beantrage einen Statuswechsel</h3>
+                        <form action="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]:8000/Horus/Profil" method="get" id="changeStatus">
+                            <label for="VIPwechsel">Antrag auf einen <strong style="color: #d29501;">VIP</strong>-Status stellen: </label>
+                            <input type="hidden" name="accname" value="{{ Accname }}">
+                            <input type="hidden" name="pwd" value="{{ PWD }}">
+                            <input type="hidden" name="statuswechsel" value="{{ Accname }}">                
+                            <button id="VIPwechsel" type="submit"><strong style="color: #d29501;">VIP</strong> beantragen</button>
+                        </form>
+                        {% else %}
+                        <p>Dein <strong style="color: #d29501;">VIP</strong>-Status ist beantragt. Er muss von einem Administrator genehmigt werden.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+    </div>
+
+</body>
+</html>

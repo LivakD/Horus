@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horus</title>
+    <link rel="icon" type="image/x-icon" href="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]/Horus/Bilder/Horuseye.png">
+</head>
+
+<style>
+
+body {
+    background-color: #262626;
+    font-family: Arial, sans-serif;
+}
+
+#menuswitch {
+    margin: 0 0 2% 20px;
+    cursor: pointer;
+    height: 20px;
+}
+
+#Logo {
+    height: 80px;
+}
+
+#app-container {
+    display: flex;
+    height: 100vh;
+}
+
+#sidebar {
+    width: 250px;
+    background-color: #262626;
+    padding: 20px;
+    color: white;
+}
+
+#sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#sidebar ul li {
+    margin: 15px 0;
+}
+
+#sidebar a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+#sidebar a:hover {
+    text-decoration: underline;
+}
+
+#content {
+    flex-grow: 1;
+    padding: 20px;
+    border-radius: 20px;
+    background-image: linear-gradient(0deg, #d29501, black);
+}
+
+#Home, #Profil, #Log-Out, #Admin-Tools {
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+#card {
+    padding: 20px;
+    background: lightgray;
+    border-radius: 10px;
+    color: black;
+    margin: 2% 0;
+}
+
+#card1, #card2, #card3, #card4, #card5, #card6, #card7, #card8, #card9 {
+    border-top: 1px solid #d29501;
+    overflow: auto;
+    height: 250px;
+}
+
+#eintragen select, #eintragen input, #eintragen textarea {
+    width: 100%;
+    margin: 15px 0;
+}
+
+#lernkarte {
+    background-color: white;
+    color: black;
+    padding: 2px 15px;
+    border-radius: 10px;
+    margin: 6px;
+}
+
+/* admin: 𓂀
+    vip: 𓁿
+    normal: 𓁹
+    ⌄  ⌃
+
+*/
+
+#status-word, #status-icon {
+    float: right;
+    color: lightgreen;
+}
+
+#genehmigung, #ablehnung, #sperren, #freigeben {
+    float: right;
+}
+
+#freigeben {
+    background-color: lightcoral;
+    border-radius: 20px;
+    height: 30px;
+    padding: 0;
+    width: 50px;
+    margin: 10px;
+    box-shadow: inset 0 0 5px gray;
+}
+
+#sperren {
+    background-color: lightgreen;
+    border-radius: 20px;
+    height: 30px;
+    padding: 0;
+    width: 50px;
+    margin: 10px;
+    box-shadow: inset 0 0 5px gray;
+
+}
+
+#genehmigung button, #ablehnung button {
+    height: 100%;
+    margin: 10px 5px;
+    padding: 5px;
+    width: 50px;
+    cursor: pointer;
+}
+
+#sperren button, #freigeben button {
+    height: 100%;
+    margin: 10px 5px;
+    padding: 5px 0;
+    width: 29px;
+    border-radius: 50px;
+    border: none;
+    border-bottom: 2px solid gray;
+    color: transparent;
+    cursor: pointer;
+}
+
+#logoutbutton {
+    color: black;
+    border: none;
+    width: 200px;
+    padding: 5px;
+    border-radius: 5px;
+    float: left;
+    margin: 15px 5px auto;
+    background-color: #d19400;
+    cursor: pointer;
+}
+
+#print-container {
+    display: none;
+}
+
+
+@media (max-width: 1000px){
+
+#Logo {
+
+}
+#app-container {
+        flex-direction: column;
+    }
+#sidebar {
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+    }
+#sidebar a {
+        font-size: 16px;
+    }
+#mainmenu {
+    display: flex;
+    justify-content: space-around;
+    border-top: none;
+    padding-top: 0;
+    margin-top: 10px;
+}
+
+#content {
+    padding: 0;
+}
+
+}
+
+@media print{
+    #app-container, #menuswitch, #status-icon, #status-word {
+        display: none;
+    }
+    #print-container {
+        display: block;
+    }
+
+    #Logo {
+        height: 50pt;
+    }
+
+    h2 {
+        font-size: 15pt;
+    }
+
+    #lernkarte, #kumulativ {
+        border-top: 2px solid black;
+        border-radius: 0;
+        line-height: 0.5pt;
+    }
+
+    #kumulativ {
+        border-top: double 3pt black;
+    }
+}
+
+
+
+</style>
+
+<script>
+    function showContent(show, hide1, hide2, hide3) {
+        document.getElementById(show).style.display = 'block';
+        document.getElementById(hide1).style.display = 'none';
+        document.getElementById(hide2).style.display = 'none';
+        document.getElementById(hide3).style.display = 'none';
+    }
+
+    function showCard(content, show) {
+        document.getElementById(content).style.display = 'block';
+        document.getElementById(show).innerHTML = 'hide';
+    }
+
+    function hideCard(content, show) {
+        document.getElementById(content).style.display = 'none';
+        document.getElementById(show).innerHTML = 'show';
+    }
+
+    function showMenu() {
+        document.getElementById('sidebar').style.display = 'block';
+        document.getElementById('menuswitch').setAttribute('onclick', 'hideMenu()');
+    }
+    
+    function hideMenu() {
+        document.getElementById('sidebar').style.display = 'none';
+        document.getElementById('menuswitch').setAttribute('onclick', 'showMenu()');
+    }
+
+    function printView() {
+        window.print()
+    }
+
+
+</script>
+
+<body>
+    <header>
+        <img id="Logo" src="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]/Horus/Bilder/Schriftzug.png" alt="Horus Schriftzug mit Logo">
+        <div style="float: right; display: grid; text-align: center; margin: 10px;">
+            <div style="float: right; background-color: black; border: 2px solid #d29501; border-radius: 50px;">
+                <div id="status-icon" style="font-size: 30px; margin: -17px 9px auto 9px;">𓂀</div>
+            </div>
+            <p id="status-word" style="margin: 2px;">admin</p>
+        </div>
+    </header>
+    <img id="menuswitch" onclick="showMenu()" src="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]/Horus/Bilder/Menu-Icon.png">
+    <div id="app-container">
+        <nav id="sidebar" style="display:none;">
+            <ul id="mainmenu">
+                <li><a href="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]:8000/Horus/Admin?accname={{ Accname }}&pwd={{ PWD }}" id="home-button" onclick="showContent('Home', 'Profil', 'Log-Out', 'Admin-Tools')">Home</a></li>
+                <li><a href="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]:8000/Horus/AdminProfil?accname={{ Accname }}&pwd={{ PWD }}" id="profil-button" onclick="showContent('Profil', 'Home', 'Log-Out', 'Admin-Tools')">Profil</a></li>
+                <li><a href="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]:8000/Horus/Admin-Tools?accname={{ Accname }}&pwd={{ PWD }}" id="profil-button" onclick="showContent('Admin-Tools', 'Profil', 'Home', 'Log-Out')" style="color: lightgreen;">Admin-Tools</a></li>
+                <li><a href="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]/Horus/LogIn.html" id="logout-button" onclick="showContent('Log-Out', 'Home', 'Profil', 'Admin-Tools')">Log out</a></li>
+            </ul>
+        </nav>
+        <div id="content">
+            <div id="Admin-Tools" style="display: block; color: lightgreen;">
+                <h2>Admin-Tools</h2>
+                <div id="card">
+                    <h2>Module</h2>
+                    <div id="card1" style="display: block;">
+                        <h3>Vorhandene Module</h3>
+                        {% for modul in Modulauswahl %}
+                        <form action="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]:8000/Horus/Admin-Tools" method="get">
+                            <input type="hidden" name="accname" value="{{ Accname }}">
+                            <input type="hidden" name="pwd" value="{{ PWD }}">
+                            <input type="hidden" name="deletemodul" value="true">
+                            <input type="hidden" name="modulname" value="{{ modul }}">
+                            <div style="display: block ruby; width: 330px;">
+                                <p>{{ modul }}</p><button type="submit" style="float: right; margin-top: 14px;">🗑️</button>
+                            </div>
+                        </form>
+                        {% empty %}
+                        <p>Keine Module vorhanden ! Lege welche an.</p>
+                        {% endfor %}
+                        <h3>Neues Modul anlegen</h3>
+                        <form action="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]:8000/Horus/Admin-Tools" method="get" id="addmodul">
+                            <input type="hidden" name="accname" value="{{ Accname }}">
+                            <input type="hidden" name="pwd" value="{{ PWD }}">
+                            <input type="hidden" name="addmodul" value="true">                
+                            <label for="modulname">Gib hier den Namen des neuen Moduls ein:</label>
+                            <input type="text" name="modulname" id="modulname" placeholder="Modulname">
+                            <button type="submit">anlegen</button>
+                        </form>
+                    </div>
+                </div>
+                <div id="card">
+                    <h2>Anfragen</h2>
+                    <div id="card2" style="display: block;">
+                        <h3>Statusänderung zu <strong style="color: #d29501;">VIP</strong></h3>
+                         {% for user in antragVIP %}
+                        <div style="height: 50px; background-color: white; border-radius: 5px; padding: 5px 20px; margin: 1% auto;">
+                            <p style="float: left;">{{ user.username }}</p>
+                            <form action="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]:8000/Horus/Admin-Tools" method="get" id="genehmigung">
+                                <input type="hidden" name="accname" value="{{ Accname }}">
+                                <input type="hidden" name="pwd" value="{{ PWD }}">
+                                <input type="hidden" name="genehmigen" value="{{ user.filename }}">                
+                                <button type="submit"><strong style="color: lightgreen;">✔</strong></button>
+                            </form>
+                            <form action="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]:8000/Horus/Admin-Tools" method="get" id="ablehnung">
+                                <input type="hidden" name="accname" value="{{ Accname }}">
+                                <input type="hidden" name="pwd" value="{{ PWD }}">
+                                <input type="hidden" name="ablehnen" value="{{ user.filename }}">                
+                                <button type="submit"><strong style="color: red;">✖</strong></button>
+                            </form>
+                        </div>
+                        {% endfor %}
+                        <h3>Statusänderung zu <strong style="color: green;">Admin</strong></h3>
+                        {% for user in antragAdmin %}
+                        <div style="height: 50px; background-color: white; border-radius: 5px; padding: 5px 20px; margin: 1% auto;">
+                            <p style="float: left;">{{ user.username }}</p>
+                            <form action="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]:8000/Horus/Admin-Tools" method="get" id="genehmigung">
+                                <input type="hidden" name="accname" value="{{ Accname }}">
+                                <input type="hidden" name="pwd" value="{{ PWD }}">
+                                <input type="hidden" name="genehmigen" value="{{ user.filename }}">                
+                                <button type="submit"><strong style="color: lightgreen;">✔</strong></button>
+                            </form>
+                            <form action="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]:8000/Horus/Admin-Tools" method="get" id="ablehnung">
+                                <input type="hidden" name="accname" value="{{ Accname }}">
+                                <input type="hidden" name="pwd" value="{{ PWD }}">
+                                <input type="hidden" name="ablehnen" value="{{ user.filename }}">                
+                                <button type="submit"><strong style="color: red;">✖</strong></button>
+                            </form>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div id="card">
+                    <h2>User</h2>
+                    <div id="card3" style="display: block;">
+                        <h3>Usersperren verwalten</h3>
+                        {% for user in SearchContainer %}
+                            {% if user.username != "Horus-User (aendere deinen Usernamen unter Options>Profil>Stammdaten)" %}
+                        <div style="height: 50px; background-color: white; border-radius: 5px; padding: 5px 20px; margin: 1% auto;">
+                            {% if user.status == "admin" %}
+                            <p style="float: left; margin: 10px;"><strong style="color: lightgreen; margin-right: 10px;">𓂀</strong>{{ user.username }}</p>
+                            {% elif user.status == "VIP" %}
+                            <p style="float: left; margin: 10px;"><strong style="color: #d29501; margin-right: 10px;">𓁿</strong>{{ user.username }}</p>
+                            {% elif user.status == "normal" %}
+                            <p style="float: left; margin: 10px;"><strong style="color: lightblue; margin-right: 10px;">𓁹</strong>{{ user.username }}</p>
+                            {% endif %}
+                                {% if user.gesperrt == False %}
+                            <form action="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]:8000/Horus/Admin-Tools" method="get" id="sperren">
+                                <input type="hidden" name="accname" value="{{ Accname }}">
+                                <input type="hidden" name="pwd" value="{{ PWD }}">
+                                <input type="hidden" name="sperre" value="{{ user.filename }}">
+                                <button type="submit" style="margin: 0;">o</button>
+                            </form>
+                                {% elif user.gesperrt == True %}
+                            <form action="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]:8000/Horus/Admin-Tools" method="get" id="freigeben">
+                                <input type="hidden" name="accname" value="{{ Accname }}">
+                                <input type="hidden" name="pwd" value="{{ PWD }}">
+                                <input type="hidden" name="freigabe" value="{{ user.filename }}">
+                                <button type="submit" style="margin: 0 0 0 22px;">o</button>
+                            </form>
+                                {% endif %}
+                        </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div id="card">
+                    <h2>Datentransfer</h2>
+                    <div id="card9" style="display: block;">
+                        <h3>Lade deine Daten herunter oder überschreibe sie durch einen Upload</h3>
+                        <h4 style="text-decoration: underline;">Daten herunterladen</h4>
+                        <div style="width: 100%;display: flex; justify-content: center; flex-direction: row; gap: 5px;">
+                            <form action="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]:8000/Horus/Admin-Tools" method="get">
+                                <input type="hidden" name="accname" value="{{ Accname }}">
+                                <input type="hidden" name="pwd" value="{{ PWD }}">
+                                <input type="hidden" name="datenUmwandeln" value="True">
+                                <button type="submit" style="margin: 0;">Daten aktualisieren</button>
+                            </form>
+    
+                            <a href="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]/Horus/user/userjson/{{ Accname }}.json"><button style="width: 100px;">JSON</button></a>
+                            <a href="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]/Horus/user/userxml/{{ Accname }}.xml" download="user.xml"><button style="width: 100px;">XML</button></a>
+                            <a href="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]/Horus/user/usercsv/{{ Accname }}.csv" download="user.xml"><button style="width: 100px;">CSV</button></a>
+                        </div>
+                        <h4 style="text-decoration: underline;">Daten überschreiben</h4>
+                        <p>⚠️ Nach dem Upload wirst du automatisch ausgeloggt! ⚠️</p>
+                        <a href="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]/Horus/Vorlage.json"><button style="margin: 0 0 1% 0;">JSON-Vorlage herunterladen</button></a>
+                        <form action="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]:8000/Horus/Admin-Tools" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="hidden" name="accname" value="{{ Accname }}">
+                            <input type="hidden" name="pwd" value="{{ PWD }}">
+                            <input type="file" name="updateDatei">
+                            <button type="submit">Daten überschreiben</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="Log-Out" style="display: none;">
+                <h2>Wirklich ausloggen?</h2>
+                <a href="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]/Horus/LogIn.html"><button id="logoutbutton"><strong style="color: lightgreen;">Ja</strong>, ausloggen</button></a>
+                <a href="#"><button id="logoutbutton"><strong style="color: red;">Nein</strong>, zurück zu Home</button></a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

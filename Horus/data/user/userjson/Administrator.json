@@ -1,0 +1,8 @@
+{
+  "username": "Administrator",
+  "pwd": "admin",
+  "status": "admin",
+  "antragGestellt": false,
+  "gesperrt": false,
+  "module": []
+}

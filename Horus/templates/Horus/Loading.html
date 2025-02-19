@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horus - Loading</title>
+    <link rel="icon" type="image/x-icon" href="/Users/Deno/Desktop/Horus/Bilder/Horuseye.png">
+</head>
+
+<style>
+
+body {
+    background-color: #cadefc;
+    background-image: url(http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]Horus/Bilder/LoginBackground.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover; 
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+
+img {
+    margin-left: 42.5%;
+    margin-right: auto;
+    width: 15%;
+    margin-top: 10%;
+    margin-bottom: -4.5%;
+    animation: float 5s ease-in-out infinite;
+}
+
+p {
+    text-align: center;
+    margin: 5% 0 0 0;
+    font-size: 150%;
+    color: #fdb800;
+    animation: text 5s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0);
+        filter: brightness(1);
+    }
+    50% {
+        transform: translateY(-20px); /* Höhe des Schwebens */
+        filter: brightness(1.75);
+    }
+    100% {
+        transform: translateY(0);
+        filter: brightness(1);
+    }
+}
+
+@keyframes text {
+    0% {
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(1.75);
+    }
+    100% {
+        filter: brightness(1);
+    }
+}
+
+
+
+@media (max-width: 1000px){
+
+    img {
+        width: 30%;
+        margin-left: 35%;
+        margin-right: 35%;
+        margin-bottom: -17%;
+        margin-top: 50%;
+    }
+
+    p {
+        margin-top: 20%;
+        font-size: 120%;
+    }
+}
+
+
+
+</style>
+
+<body>
+    <img src="http://[2001:7c0:2320:2:f816:3eff:fe82:34b2]Horus/Bilder/Horuseye.png" alt="Horus Schriftzug">
+    <p>Loading ...</p>
+</body>
+</html>
